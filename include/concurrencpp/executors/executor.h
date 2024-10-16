@@ -88,7 +88,7 @@ namespace concurrencpp {
                 tasks.emplace_back(details::bind_with_try_catch(std::move(callable)));
             }
 
-            std::span<task> span = tasks;
+            std::span<task> span(tasks.begin(), tasks.end());
             static_cast<executor_type*>(this)->enqueue(span);
         }
 
@@ -105,7 +105,7 @@ namespace concurrencpp {
             }
 
             assert(!accumulator.empty());
-            std::span<task> span = accumulator;
+            std::span<task> span(accumulator.begin(), accumulator.end());
             static_cast<executor_type*>(this)->enqueue(span);
             return results;
         }
